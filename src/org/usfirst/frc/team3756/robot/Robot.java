@@ -7,10 +7,16 @@
 
 package org.usfirst.frc.team3756.robot;
 
+import org.usfirst.frc.team3756.robot.commands.DriveWithController;
+import org.usfirst.frc.team3756.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team3756.robot.subsystems.ScissorLift;
+import org.usfirst.frc.team3756.robot.subsystems.UsbVision;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +29,9 @@ public class Robot extends TimedRobot {
 	// Declare dash-board elements
 	private Command defaultAutonomousCommand;
 	private SendableChooser<Command> chooser = new SendableChooser<>();
+	
+	// Declare subsystems
+	private DriveWithController drive;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -30,6 +39,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// Create instances at beginning of program
+		DriveTrain.getInstance();
+		ScissorLift.getInstance();
+		UsbVision.getInstance();		
 	} // End of method
 
 	/**
@@ -82,6 +95,10 @@ public class Robot extends TimedRobot {
 		if (defaultAutonomousCommand != null) {
 			defaultAutonomousCommand.cancel();
 		} // End of method
+		
+		// Run teleop control command
+		drive = new DriveWithController();
+		drive.start();
 	} // End of method
 
 	/**
@@ -90,6 +107,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		// Set the tune value
+		drive.setTune(SmartDashboard.getNumber("Tune Value", 0));
 	} // End of method
 
 	/**

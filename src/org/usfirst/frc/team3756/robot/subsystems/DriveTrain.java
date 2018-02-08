@@ -2,7 +2,6 @@ package org.usfirst.frc.team3756.robot.subsystems;
 
 import org.usfirst.frc.team3756.robot.Constants;
 import org.usfirst.frc.team3756.robot.RobotMap;
-import org.usfirst.frc.team3756.robot.commands.DriveWithController;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
@@ -210,6 +209,5 @@ public class DriveTrain extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new DriveWithController());
 	} // End of method
 } // End of class
